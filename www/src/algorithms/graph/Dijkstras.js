@@ -26,7 +26,7 @@ function start(source) {
     Graph.forEach((i, j) => {
         w[i] = w[i] || [];
         let ei = Graph.edgeIndex(i, j);
-        if (ei !== undefined) {
+        if (ei > -1) {
             let value = $('.cost').eq(ei).text();
             w[i][j] = parseInt(value) || 0;
         } else {

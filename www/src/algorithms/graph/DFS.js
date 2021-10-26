@@ -35,7 +35,7 @@ function start(source) {
 function visit(j) {
     if (j < Graph.totalPoints()) {
         let ei = Graph.edgeIndex(i, j);
-        if (ei !== undefined) {
+        if (ei > -1) {
             if (v.indexOf(j) === -1) {
                 $('.edge').eq(ei).attr('stroke', Colors.enqueue);
                 $('.edge').eq(ei).attr('stroke-dasharray', '8,4');
@@ -83,7 +83,7 @@ function span(p, q, d) {
         let n = Graph.totalPoints();
         for (j = 0; j < n; j++) {
             let ei = Graph.edgeIndex(i, j);
-            if (ei !== undefined) {
+            if (ei > -1) {
                 if (v.indexOf(j) === -1 || stack.indexOf(j) !== -1) {
                     Timer.timeout(visit, delay, 0);
                     break;

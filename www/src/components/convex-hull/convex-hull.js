@@ -36,6 +36,7 @@ function ConvexHull(props) {
                 reset();
                 break;
             case 1:
+                $('#plane').off();
                 props.start();
                 break;
             case 2:

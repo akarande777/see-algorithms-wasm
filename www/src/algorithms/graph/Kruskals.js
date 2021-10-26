@@ -32,7 +32,7 @@ function start() {
         parent[i] = i;
         for (let j = 0; j < n; j++) {
             let ei = Graph.edgeIndex(i, j);
-            if (ei !== undefined) {
+            if (ei > -1) {
                 arr[ei].u = i;
                 arr[ei].v = j;
                 arr[ei].i = ei;

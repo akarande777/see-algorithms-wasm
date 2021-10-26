@@ -49,7 +49,7 @@ function sort() {
         $(`.vrtx:eq(${i})`).attr('fill', Colors.visited);
         for (let j = 0; j < Graph.totalPoints(); j++) {
             let ei = Graph.edgeIndex(i, j);
-            if (ei !== undefined && ind[j] !== 0) {
+            if (ei > -1 && ind[j] !== 0) {
                 --ind[j];
                 k++;
                 let p = Graph.point(i);
@@ -80,7 +80,7 @@ function sort() {
 function extract(p, q, i, j, d) {
     let ei = Graph.edgeIndex(i, j);
     if (d > 0) {
-        let r = new Point(...fromDistance(q, p, d));
+        let r = fromDistance(q, p, d);
         $(`line:eq(${ei})`).attr('x2', r.x);
         $(`line:eq(${ei})`).attr('y2', r.y);
         Timer.timeout(extract, 5, p, q, i, j, d - 2);
