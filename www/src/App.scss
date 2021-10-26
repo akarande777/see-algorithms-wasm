@@ -1,0 +1,43 @@
+@import '~bootstrap/scss/bootstrap';
+@import './common/styles.scss';
+
+.App {
+    height: 100%;
+    overflow: hidden;
+    font-size: 16px;
+}
+
+.layout {
+    height: $layout-height;
+
+    .content {
+        overflow: auto;
+        height: 100%;
+        padding: 1.5rem;
+    }
+}
+
+.drawer {
+    @include sider;
+    .paper,
+    .backdrop {
+        @include sider;
+    }
+}
+
+.sortNumbers,
+.drawGraph {
+    min-width: max-content;
+
+    table {
+        border-collapse: separate;
+        border-spacing: 0.5rem;
+        font-weight: 600;
+        font-size: 1rem;
+        td {
+            width: 3.5rem;
+            height: 3rem;
+            text-align: center;
+        }
+    }
+}

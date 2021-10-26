@@ -1,0 +1,29 @@
+.drawGraph {
+    width: 700px;
+    #plane {
+        border: thin solid;
+        margin: 1rem 0;
+        width: inherit;
+        height: 450px;
+    }
+}
+
+.toolbar {
+    align-items: center;
+    justify-content: flex-end;
+    position: relative;
+
+    .title {
+        font-size: 1.25rem;
+        font-weight: 500;
+        position: absolute;
+        left: 0;
+    }
+    .source {
+        width: 90px;
+        margin-left: 1rem;
+    }
+    button {
+        margin-left: 1rem;
+    }
+}
