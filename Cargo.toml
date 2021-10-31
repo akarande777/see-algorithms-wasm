@@ -39,7 +39,6 @@ features = [
   'HtmlElement',
   'Node',
   'Window',
-  'Event',
 ]
 
 [profile.release]

@@ -1,6 +1,5 @@
 use serde::{Deserialize, Serialize};
 use wasm_bindgen::prelude::*;
-use std::num;
 
 #[wasm_bindgen]
 #[derive(Serialize, Deserialize, Copy, Clone)]
