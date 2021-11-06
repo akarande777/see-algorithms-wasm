@@ -58,7 +58,7 @@ function dfs() {
         i = stack.pop();
         k = prev[i];
         let ei = Graph.edgeIndex(k, i);
-        let { p, q, d } = cloneEdge.call(Graph, k, ei);
+        let { p, q, d } = cloneEdge({ Graph }, k, ei);
         Timer.timeout(span, delay * 2, p, q, d - 2);
     } else {
         $('.vrtx').eq(i).attr('fill', Colors.vertex);

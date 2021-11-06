@@ -54,13 +54,13 @@ function addEdge(p, q) {
     $('line:last').insertBefore($('.vgrp:first'));
 }
 
-function cloneEdge(i, j) {
+function cloneEdge({ Graph }, i, j) {
     let edge = `<line stroke-width="3" stroke="${Colors.visited}" />`;
     document.getElementById('plane').innerHTML += edge;
     $('line:last').insertBefore($('.vgrp:first'));
     let p, q;
-    let segment = this.segment(j);
-    if (segment.p.equals(this.point(i))) {
+    let segment = Graph.segment(j);
+    if (segment.p.equals(Graph.point(i))) {
         p = segment.p;
         q = segment.q;
     } else {

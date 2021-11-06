@@ -65,7 +65,7 @@ function extractMin() {
         extractMin();
     } else {
         let ei = Graph.edgeIndex(i, j);
-        let { p, q, d } = cloneEdge.call(Graph, i, ei);
+        let { p, q, d } = cloneEdge({ Graph }, i, ei);
         Timer.timeout(span, 10, p, q, d - 2);
     }
 }
