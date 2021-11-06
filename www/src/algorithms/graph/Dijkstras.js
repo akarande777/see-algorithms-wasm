@@ -6,12 +6,11 @@ import Timer from '../../common/timer';
 import { Colors } from '../../common/constants';
 import { AppContext } from '../../common/context';
 
-var Graph, Point;
+var Graph;
 
 export default function (props) {
     let context = useContext(AppContext);
     Graph = context.Graph;
-    Point = context.Point;
     return <DrawGraph {...props} start={start} weighted={true} />;
 }
 
@@ -36,13 +35,14 @@ function start(source) {
     v = [source];
     d = [];
     for (let i = 0; i < n; i++) {
-        d.push(i === source ? 0 : Infinity);
+        if (i === source) d.push(0);
+        else {
+            d.push(Infinity);
+            $('.vlbl').eq(i).text('∞');
+        }
     }
     queue = [source];
     prev = [];
-    d.forEach((x, i) => {
-        if (x > 0) $('.vlbl').eq(i).text('∞');
-    });
     Timer.timeout(() => {
         $('.vrtx').eq(source).attr('stroke', Colors.visited);
         $('.vrtx').eq(source).attr('fill', Colors.visited);
@@ -54,7 +54,8 @@ function dijkstra(i) {
     for (let j = 0; j < n; j++) {
         if (v.indexOf(j) === -1) {
             let ei = Graph.edgeIndex(i, j);
-            $('.edge').eq(ei).attr('stroke-dasharray', '8,5');
+            if (ei === -1) continue;
+            $('.edge').eq(ei).attr('stroke-dasharray', '8,4');
             if (d[i] + w[i][j] < d[j]) {
                 d[j] = d[i] + w[i][j];
                 $('.edge').eq(ei).attr('stroke', Colors.enqueue);

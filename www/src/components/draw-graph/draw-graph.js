@@ -31,8 +31,6 @@ function DrawGraph(props) {
             });
             return;
         }
-
-        console.log(Graph);
         if (!Graph.isConnected()) {
             showToast({
                 message: 'Please draw connected graph',
@@ -46,13 +44,12 @@ function DrawGraph(props) {
     const config = () => ({
         context: { Graph, Point, Segment },
         weighted: props.isMST || props.weighted || false,
-        directed: directed,
-        asyclic: props.isDAG || false,
+        acyclic: props.isDAG || false,
     });
 
     const reset = () => {
         Graph.clear();
-        drawGraph.call({ Graph, Point, Segment }, config());
+        drawGraph({ Graph, Point, Segment }, config());
     };
 
     const clear = () => {
@@ -85,7 +82,7 @@ function DrawGraph(props) {
     useEffect(() => {
         if (directed !== Graph.isDirected()) {
             Graph.switchType();
-            drawGraph.call({ Graph, Point, Segment }, config());
+            drawGraph({ Graph, Point, Segment }, config());
             if (directed) {
                 $('.edge').each(function (i) {
                     let s = Graph.segment(i);

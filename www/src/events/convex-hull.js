@@ -5,11 +5,10 @@ import { Colors } from '../common/constants';
 function print(p) {
     let point = `<circle class="vrtx" cx="${p.x}" cy="${p.y}" r="4" fill="${Colors.stroke}" />`;
     document.getElementById('plane').innerHTML += point;
-    this.addPoint(p);
 }
 
-export function randomize() {
-    const { Graph, Point } = this;
+export function randomize(context) {
+    const { Graph, Point } = context;
     for (let i = 0; i < 30; i++) {
         let x = Math.floor(Math.random() * 600 + 50);
         let y = Math.floor(Math.random() * 350 + 50);
@@ -21,22 +20,19 @@ export function randomize() {
             if (d < 15) break;
         }
         if (j < np) continue;
-        print.call(Graph, p);
+        print(p);
+        Graph.addPoint(p);
     }
 }
 
-var convex;
-var left, p, q;
-
-export function addPoints(cvx) {
-    convex = cvx;
-    var { Graph, Point, Segment } = this;
-    var flag = false;
-    var k;
+export function addPoints(context, convex) {
+    var { Graph, Point, Segment } = context;
+    var flag = false, k;
+    var left, p, q;
 
     $('#plane').on('mousedown', function (e) {
         e.preventDefault();
-        let p = new Point(withOffset(e).x, withOffset(e).y);
+        let p = new Point(...withOffset(e));
         let np = Graph.totalPoints();
         for (let i = 0; i < np; i++) {
             if (distance(p, Graph.point(i)) < 8) {
@@ -45,12 +41,13 @@ export function addPoints(cvx) {
                 return;
             }
         }
-        print.call(Graph, p);
+        print(p);
+        Graph.addPoint(p);
         if (convex) {
-            let cl = convex.length;
-            for (let i = 0; i < cl; i++) {
+            let size = convex.length;
+            for (let i = 0; i < size; i++) {
                 let u = Graph.point(convex[i]);
-                let v = Graph.point(convex[(i + 1) % cl]);
+                let v = Graph.point(convex[(i + 1) % size]);
                 let s = new Segment(u, v);
                 if (s.orientation(p) === 1) {
                     newConvex();
@@ -63,7 +60,7 @@ export function addPoints(cvx) {
     $('#plane').on('mousemove', function (e) {
         e.preventDefault();
         if (flag) {
-            let p = new Point(withOffset(e).x, withOffset(e).y);
+            let p = new Point(...withOffset(e));
             $('.vrtx').eq(k).attr('cx', p.x);
             $('.vrtx').eq(k).attr('cy', p.y);
             Graph.setPoint(k, p);
@@ -107,7 +104,7 @@ export function addPoints(cvx) {
             let u = Graph.point(p);
             let v = Graph.point(q);
             let edge = `<line x1="${u.x}" y1="${u.y}" x2="${v.x}" y2="${v.y}" stroke-width="2" stroke="${Colors.visited}" />`;
-            document.querySelector('#plane').innerHTML += edge;
+            document.getElementById('plane').innerHTML += edge;
             p = q;
         } while (p !== left);
     }

@@ -1,36 +1,30 @@
 import React, { useContext } from 'react';
-import { fromDistance, distance } from '../../common/utils';
+import { fromDistance, distance, createTable } from '../../common/utils';
 import DrawGraph from '../../components/draw-graph/draw-graph';
 import $ from 'jquery';
 import Timer from '../../common/timer';
 import { Colors } from '../../common/constants';
 import { AppContext } from '../../common/context';
 
-var Graph, Point;
+var Graph;
 
 export default function (props) {
     let context = useContext(AppContext);
     Graph = context.Graph;
-    Point = context.Point;
     return <DrawGraph {...props} start={start} isDAG={true} />;
 }
 
-var cell, n, k;
-var ind, stack;
+var cells, n;
+var ind, stack, k;
 var delay = 500;
 
 function start() {
-    let tbl = document.querySelector('#tbl');
-    tbl.innerHTML = '';
-    let row = document.createElement('tr');
-    cell = [];
     n = Graph.totalPoints();
-    for (let j = 0; j < n; j++) {
-        cell[j] = document.createElement('td');
-        cell[j].setAttribute('style', 'border: 2px solid;width: 3rem');
-        row.appendChild(cell[j]);
+    createTable(1, n);
+    cells = document.querySelectorAll('.cell');
+    for (let i = 0; i < n; i++) {
+        cells[i].setAttribute('style', 'border: 2px solid;width: 3rem');
     }
-    tbl.appendChild(row);
     stack = [];
     ind = Graph.indegree();
     for (let i = 0; i < n; i++) {
@@ -55,7 +49,7 @@ function sort() {
                 let p = Graph.point(i);
                 let x2 = $(`line:eq(${ei})`).attr('x2');
                 let y2 = $(`line:eq(${ei})`).attr('y2');
-                let q = new Point(x2, y2);
+                let q = { x: x2, y: y2 };
                 $(`line:eq(${ei})`).attr('stroke', Colors.visited);
                 let d = distance(p, q);
                 Timer.timeout(() => {
@@ -72,7 +66,7 @@ function sort() {
         }
     } else {
         setTimeout(() => {
-            document.querySelector('#clear').click();
+            document.getElementById('clear').click();
         }, delay);
     }
 }
@@ -101,9 +95,9 @@ function fall(i) {
         Timer.timeout(fall, 5, i);
     } else {
         let np = Graph.totalPoints();
-        cell[np - n].innerHTML = String.fromCharCode(65 + i);
-        cell[np - n].setAttribute('bgcolor', Colors.visited);
-        --n;
+        cells[np - n].innerHTML = String.fromCharCode(65 + i);
+        cells[np - n].setAttribute('bgcolor', Colors.visited);
+        n--;
         Timer.timeout(sort, delay);
     }
 }

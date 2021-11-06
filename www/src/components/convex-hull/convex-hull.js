@@ -13,8 +13,8 @@ function ConvexHull(props) {
 
     const reset = () => {
         Graph.clear();
-        addPoints.call({ Graph, Point, Segment });
-        randomize.call({ Graph, Point });
+        addPoints({ Graph, Point, Segment });
+        randomize({ Graph, Point });
     };
 
     const clear = () => {

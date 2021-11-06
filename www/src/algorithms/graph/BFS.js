@@ -6,12 +6,11 @@ import Timer from '../../common/timer';
 import { Colors } from '../../common/constants';
 import { AppContext } from '../../common/context';
 
-var Graph, Point;
+var Graph;
 
 export default function (props) {
     let context = useContext(AppContext);
     Graph = context.Graph;
-    Point = context.Point;
     return <DrawGraph {...props} start={start} />;
 }
 

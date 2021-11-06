@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import Numbers from '../../components/numbers/numbers';
 import { Colors } from '../../common/constants';
+import { createTable } from '../../common/utils';
 
-var a, n;
+var a, n, cells;
 var i, j, swaps;
-var tbl, cell;
 var timer;
 var delay = 800;
 
@@ -15,16 +15,16 @@ function iloop() {
         timer = setTimeout(jloop, delay);
     } else {
         for (let k = 0; k < n; k++) {
-            cell[k + n].setAttribute('bgcolor', Colors.sorted);
+            cells[k + n].setAttribute('bgcolor', Colors.sorted);
         }
     }
 }
 
 function jloop() {
     if (j < n - i - 1) {
-        cell[j + n - 1].removeAttribute('bgcolor');
-        cell[j + n].setAttribute('bgcolor', Colors.compare);
-        cell[j + n + 1].setAttribute('bgcolor', Colors.compare);
+        cells[j + n - 1].removeAttribute('bgcolor');
+        cells[j + n].setAttribute('bgcolor', Colors.compare);
+        cells[j + n + 1].setAttribute('bgcolor', Colors.compare);
         if (a[j + 1] < a[j]) {
             timer = setTimeout(swap, delay);
             swaps++;
@@ -33,8 +33,8 @@ function jloop() {
             j++;
         }
     } else {
-        cell[j + n - 1].removeAttribute('bgcolor');
-        cell[j + n].setAttribute('bgcolor', Colors.sorted);
+        cells[j + n - 1].removeAttribute('bgcolor');
+        cells[j + n].setAttribute('bgcolor', Colors.sorted);
         iloop();
         i++;
     }
@@ -44,18 +44,11 @@ function BubbleSort() {
     const start = (values) => {
         a = [...values];
         n = a.length;
-        cell = [];
-        for (let i = 0; i < 3; i++) {
-            let row = document.createElement('tr');
-            for (let j = 0; j < n; j++) {
-                cell[i * n + j] = document.createElement('td');
-                if (i === 1) {
-                    cell[i * n + j].innerHTML = a[j];
-                    cell[i * n + j].style.border = '2px solid';
-                }
-                row.appendChild(cell[i * n + j]);
-            }
-            tbl.appendChild(row);
+        createTable(3, n);
+        cells = document.querySelectorAll('.cell');
+        for (let k = 0; k < n; k++) {
+            cells[k + n].innerHTML = a[k];
+            cells[k + n].style.border = '2px solid';
         }
         i = 0;
         j = 0;
@@ -65,13 +58,10 @@ function BubbleSort() {
 
     const stop = () => {
         clearTimeout(timer);
-        tbl.innerHTML = '';
+        document.getElementById('tbl').innerHTML = '';
     };
 
-    useEffect(() => {
-        tbl = document.getElementById('tbl');
-        return () => stop();
-    }, []);
+    useEffect(() => () => stop(), []);
 
     return (
         <div className="sortNumbers">
@@ -85,27 +75,28 @@ function swap() {
     let t = a[j];
     a[j] = a[j + 1];
     a[j + 1] = t;
+    let npn = n + n;
     timer = setTimeout(function () {
         shift(j + 1, j + n + 1);
-        shift(j + n + n, j + n);
+        shift(j + npn, j + n);
     }, 150);
     timer = setTimeout(function () {
         shift(j, j + 1);
-        shift(j + n + n + 1, j + n + n);
+        shift(j + npn + 1, j + npn);
     }, 300);
     timer = setTimeout(function () {
         shift(j + n, j);
-        shift(j + n + 1, j + n + n + 1);
+        shift(j + n + 1, j + npn + 1);
         j++;
     }, 450);
     timer = setTimeout(jloop, delay);
 }
 
 function shift(u, v) {
-    cell[u].innerHTML = cell[v].innerHTML;
-    cell[u].setAttribute('bgcolor', Colors.compare);
-    cell[v].removeAttribute('bgcolor');
-    cell[v].innerHTML = '';
+    cells[u].innerHTML = cells[v].innerHTML;
+    cells[u].setAttribute('bgcolor', Colors.compare);
+    cells[v].removeAttribute('bgcolor');
+    cells[v].innerHTML = '';
 }
 
 export default BubbleSort;

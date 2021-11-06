@@ -6,12 +6,11 @@ import Timer from '../../common/timer';
 import { Colors } from '../../common/constants';
 import { AppContext } from '../../common/context';
 
-var Graph, Point;
+var Graph;
 
 export default function (props) {
     let context = useContext(AppContext);
     Graph = context.Graph;
-    Point = context.Point;
     return <DrawGraph {...props} start={start} isMST={true} />;
 }
 
@@ -50,7 +49,7 @@ function prim() {
         if (mst.indexOf(k) === -1 && w[i][k] !== Infinity) {
             let ei = Graph.edgeIndex(i, k);
             $('.edge').eq(ei).attr('stroke', Colors.enqueue);
-            $('.edge').eq(ei).attr('stroke-dasharray', '8,5');
+            $('.edge').eq(ei).attr('stroke-dasharray', '8,4');
             $('.vrtx').eq(k).attr('stroke', Colors.enqueue);
         }
     }

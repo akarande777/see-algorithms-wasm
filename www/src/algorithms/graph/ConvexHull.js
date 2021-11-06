@@ -3,15 +3,13 @@ import ConvexHull from '../../components/convex-hull/convex-hull';
 import $ from 'jquery';
 import Timer from '../../common/timer';
 import { Colors } from '../../common/constants';
-import { addPoints } from '../../events/convex-hull';
 import { AppContext } from '../../common/context';
 
-var Graph, Point, Segment;
+var Graph, Segment;
 
 export default function (props) {
     let context = useContext(AppContext);
     Graph = context.Graph;
-    Point = context.Point;
     Segment = context.Segment;
     return <ConvexHull {...props} start={start} />;
 }
@@ -63,5 +61,5 @@ function connect(color) {
     let u = Graph.point(p);
     let v = Graph.point(q);
     let edge = `<line x1="${u.x}" y1="${u.y}" x2="${v.x}" y2="${v.y}" stroke-width="2" stroke="${color}" />`;
-    document.querySelector('#plane').innerHTML += edge;
+    document.getElementById('plane').innerHTML += edge;
 }
