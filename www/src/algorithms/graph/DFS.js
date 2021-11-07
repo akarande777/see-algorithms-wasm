@@ -15,8 +15,7 @@ export default function (props) {
 }
 
 var stack;
-var v, i;
-var prev, k;
+var v, i, prev, k;
 var delay = 500;
 
 function start(source) {

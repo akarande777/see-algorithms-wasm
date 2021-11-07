@@ -14,8 +14,8 @@ export default function (props) {
     return <DrawGraph {...props} start={start} />;
 }
 
-var queue, v, i;
-var prev, k;
+var queue;
+var v, i, prev, k;
 var delay = 500;
 
 function start(source) {
