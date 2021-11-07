@@ -2,11 +2,6 @@ import $ from 'jquery';
 import { distance, withOffset } from '../common/utils';
 import { Colors } from '../common/constants';
 
-function print(p) {
-    let point = `<circle class="vrtx" cx="${p.x}" cy="${p.y}" r="4" fill="${Colors.stroke}" />`;
-    document.getElementById('plane').innerHTML += point;
-}
-
 export function randomize(context) {
     const { Graph, Point } = context;
     for (let i = 0; i < 30; i++) {
@@ -20,7 +15,8 @@ export function randomize(context) {
             if (d < 15) break;
         }
         if (j < np) continue;
-        print(p);
+        let point = `<circle class="vrtx" cx="${p.x}" cy="${p.y}" r="4" fill="${Colors.stroke}" />`;
+        document.getElementById('plane').innerHTML += point;
         Graph.addPoint(p);
     }
 }
@@ -41,7 +37,8 @@ export function addPoints(context, convex) {
                 return;
             }
         }
-        print(p);
+        let point = `<circle class="vrtx" cx="${p.x}" cy="${p.y}" r="4" fill="${Colors.stroke}" />`;
+        document.getElementById('plane').innerHTML += point;
         Graph.addPoint(p);
         if (convex) {
             let size = convex.length;
